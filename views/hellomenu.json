@@ -1,0 +1,55 @@
+{
+    "_": "window",
+    "title": "Hello Menu",
+    "menu": [
+        {
+            "title": "File",
+            "menu": [
+                {"title": "New", "id": "file-new"},
+                {"title": "Open..."}
+            ]
+        },
+        {
+            "title": "Edit",
+            "menu": [
+                {"title": "Undo"},
+                {"_": "separator"},
+                {"title": "Cut"}
+            ]
+        }
+    ],
+    "child": {
+        "_": "box",
+        "children": [
+            {
+                "_": "progress",
+                "percent": "75"
+            },
+            {
+                "_": "tree",
+                "columns": [
+                    {
+                        "title": "Book"
+                    },
+                    {
+                        "title": "Author"
+                    },
+                    {
+                        "title": "Date"
+                    }
+                ],
+                "items": [
+                    [
+                        "The Art of Computer Programming",
+                        "Donald E. Knuth",
+                        "25.46"
+                    ]
+                ]
+            },
+            {
+                "_": "button",
+                "title": "Hello Kitty"
+            }
+        ]
+    }
+}

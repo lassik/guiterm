@@ -7,6 +7,6 @@ import guiterm.terminal
 
 
 if __name__ == '__main__':
-    guiterm.terminal.create_view(
-        guiterm.encoding.read_toplevel(sys.stdin.buffer))
-    guiterm.terminal.main()
+    guiterm.terminal.main(
+        lambda: guiterm.encoding.read_toplevel(sys.stdin.buffer),
+        lambda msg: guiterm.encoding.write_toplevel(msg, sys.stdout.buffer))

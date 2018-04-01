@@ -1,0 +1,17 @@
+{
+    "_": "window",
+    "child": {
+        "_": "box",
+        "direction": "ltr",
+        "children": [
+            {
+                "_": "progress",
+                "percent": "75"
+            },
+            {
+                "_": "button",
+                "title": "Hello Kitty"
+            }
+        ]
+    }
+}
