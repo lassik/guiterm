@@ -27,16 +27,20 @@ def menu_rec(action_group, parent, nextid, xmenu):
     return nextid
 
 
-def menu_bar(window, xwin):
-    action_group = Gtk.ActionGroup('my_actions')
-    xml_ui = ET.Element('ui')
-    xml_menubar = ET.SubElement(xml_ui, 'menubar', name='MenuBar')
-    menu_rec(action_group, xml_menubar, 0, xwin.get('menu', []))
-    ui_manager = Gtk.UIManager()
-    ui_manager.add_ui_from_string(ET.tostring(xml_ui, encoding='unicode'))
-    ui_manager.insert_action_group(action_group)
-    window.add_accel_group(ui_manager.get_accel_group())
-    return ui_manager.get_widget('/MenuBar')
+def create_menu_bar(xwin):
+    menu_bar, accel_group = None, None
+    xmenu = xwin.get('menu', [])
+    if xmenu:
+        action_group = Gtk.ActionGroup('my_actions')
+        xml_ui = ET.Element('ui')
+        xml_menubar = ET.SubElement(xml_ui, 'menubar', name='MenuBar')
+        menu_rec(action_group, xml_menubar, 0, xmenu)
+        ui_manager = Gtk.UIManager()
+        ui_manager.add_ui_from_string(ET.tostring(xml_ui, encoding='unicode'))
+        ui_manager.insert_action_group(action_group)
+        menu_bar = ui_manager.get_widget('/MenuBar')
+        accel_group = ui_manager.get_accel_group()
+    return menu_bar, accel_group
 
 
 def create_button(x):
@@ -80,15 +84,20 @@ def create_tree(x):
 
 
 def create_window(x):
+    xchild = x.get('child')
+    child = create_view(xchild) if xchild else None
+    menu_bar, accel_group = create_menu_bar(x)
     win = Gtk.Window()
     win.set_title(x.get('title', ''))
     win.connect('delete-event', Gtk.main_quit)
     win.connect('destroy', Gtk.main_quit)
+    if accel_group:
+        win.add_accel_group(accel_group)
     box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-    box.pack_start(menu_bar(win, x), False, False, 0)
-    xchild = x.get('child')
-    if xchild:
-        box.pack_start(create_view(xchild), False, False, 0)
+    if menu_bar:
+        box.pack_start(menu_bar, False, False, 0)
+    if child:
+        box.pack_start(child, False, False, 0)
     win.add(box)
     win.show_all()
     return win
