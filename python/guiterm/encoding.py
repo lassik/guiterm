@@ -129,7 +129,7 @@ def write_toplevel(val, io):
     byts = byio.getvalue()
     io.write(b'\xff')
     write_varint(portable_ieee_crc32(byts), io)
-    write_bytes(byte, io)
+    write_bytes(byts, io)
 
 
 # gte.write_toplevel({'foo': ['bar', {'baz': 12, 'qux': True}, None]}, f)
