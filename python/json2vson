@@ -1,11 +1,25 @@
 #! /usr/bin/env python3
 
+import argparse
 import json
+import os
 import sys
 
 import guiterm.encoding
 
 
 if __name__ == '__main__':
-    val = json.load(sys.stdin)
-    guiterm.encoding.write_toplevel(val, sys.stdout.buffer)
+    ap = argparse.ArgumentParser()
+    ap.add_argument('inputfile', default='-')
+    args = ap.parse_args()
+
+    inputstream = sys.stdin.buffer if args.inputfile == '-' else open(
+        args.inputfile, 'rb')
+
+    outputfile = '-' if args.inputfile == '-' \
+                 else os.path.splitext(args.inputfile)[0]+'.vson'
+    outputstream = sys.stdout.buffer if outputfile == '-' else open(
+        outputfile, 'wb')
+
+    val = json.load(inputstream)
+    guiterm.encoding.write_toplevel(val, outputstream)
