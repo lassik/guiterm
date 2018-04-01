@@ -1,0 +1,11 @@
+#! /usr/bin/env python3
+
+import json
+import sys
+
+import guiterm.encoding
+
+
+if __name__ == '__main__':
+    val = guiterm.encoding.read_toplevel(sys.stdin.buffer)
+    json.dump(val, sys.stdout)
