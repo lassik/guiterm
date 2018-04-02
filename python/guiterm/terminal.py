@@ -57,8 +57,8 @@ def create_box(x):
         'btt': Gtk.Orientation.VERTICAL,
     }[x.get('direction', 'ttb')]
     box = Gtk.Box(orientation=orientation, spacing=6)
-    for xchild in x.get('children'):
-        box.pack_start(create_view(xchild), True, True, 0)
+    for xcontrol in x.get('controls'):
+        box.pack_start(create_view(xcontrol), True, True, 0)
     return box
 
 
@@ -84,8 +84,6 @@ def create_tree(x):
 
 
 def create_window(x):
-    xchild = x.get('child')
-    child = create_view(xchild) if xchild else None
     menu_bar, accel_group = create_menu_bar(x)
     win = Gtk.Window()
     win.set_title(x.get('title', ''))
@@ -93,12 +91,11 @@ def create_window(x):
     win.connect('destroy', Gtk.main_quit)
     if accel_group:
         win.add_accel_group(accel_group)
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    topbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     if menu_bar:
-        box.pack_start(menu_bar, False, False, 0)
-    if child:
-        box.pack_start(child, False, False, 0)
-    win.add(box)
+        topbox.pack_start(menu_bar, False, False, 0)
+    topbox.pack_start(create_box(x), False, False, 0)
+    win.add(topbox)
     win.show_all()
     return win
 

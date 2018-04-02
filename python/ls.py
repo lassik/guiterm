@@ -13,9 +13,14 @@ if __name__ == '__main__':
     args = ap.parse_args()
     names = os.listdir(args.dir)
     guiterm.encoding.write_toplevel(
-        {"_": "window", "title": "ls",
-         "child": {
-             "_": "tree",
-             "columns": [{"title": "Filename"}],
-             "items": [[name] for name in names]}},
+        {"_": "window",
+         "title": "ls",
+         "controls": [
+             {
+                 "_": "tree",
+                 "columns": [{"title": "Filename"}],
+                 "items": [[name] for name in names]
+             }
+         ]
+         },
         sys.stdout.buffer)

@@ -1,8 +1,10 @@
 {
     "_": "window",
-    "child": {
-        "_": "button",
-        "id": "hello-button",
-        "title": "Hello Kitty"
-    }
+    "controls": [
+        {
+            "_": "button",
+            "id": "hello-button",
+            "title": "Hello Kitty"
+        }
+    ]
 }
